@@ -1,0 +1,792 @@
+3<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Creative Designer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            background: #0f1419;
+            color: #e8eaed;
+        }
+
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #64b5f6 0%, #4dd0e1 30%, #ff8a80 70%, #ffd180 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+            text-shadow: 0 0 40px rgba(100, 181, 246, 0.3);
+        }
+
+        .hero .subtitle {
+            font-size: 1.8rem;
+            color: #b0bec5;
+            margin-bottom: 30px;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .hero .tagline {
+            font-size: 1.1rem;
+            color: #90a4ae;
+            max-width: 600px;
+            line-height: 1.8;
+            animation: fadeInUp 1.4s ease;
+        }
+
+        /* Projects Section */
+        .section {
+            min-height: 100vh;
+            padding: 100px 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 80px;
+            text-align: center;
+            background: linear-gradient(135deg, #4dd0e1 0%, #64b5f6 50%, #81c784 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 10;
+        }
+
+        .projects-grid {
+            position: relative;
+            width: 100%;
+            height: 120vh;
+            max-width: 1600px;
+        }
+
+        .project-card {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(25, 32, 42, 0.6) 0%, rgba(18, 24, 32, 0.7) 100%);
+            border-radius: 16px;
+            padding: 35px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(77, 208, 225, 0.15);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            overflow: hidden;
+            max-width: 360px;
+            animation: floatCard 6s ease-in-out infinite;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .project-card:nth-child(1) { animation-delay: 0s; }
+        .project-card:nth-child(2) { animation-delay: 1s; }
+        .project-card:nth-child(3) { animation-delay: 2s; }
+        .project-card:nth-child(4) { animation-delay: 3s; }
+        .project-card:nth-child(5) { animation-delay: 4s; }
+        .project-card:nth-child(6) { animation-delay: 5s; }
+
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            25% { transform: translateY(-15px) translateX(10px); }
+            50% { transform: translateY(-10px) translateX(-10px); }
+            75% { transform: translateY(-20px) translateX(5px); }
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(77, 208, 225, 0.2) 0%, rgba(255, 138, 128, 0.1) 50%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .project-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 16px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(77, 208, 225, 0.4), rgba(129, 199, 132, 0.3), rgba(255, 138, 128, 0.3));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-card:hover::after {
+            opacity: 0.8;
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            border-color: rgba(77, 208, 225, 0.6);
+            box-shadow: 0 20px 60px rgba(77, 208, 225, 0.3), 0 0 40px rgba(129, 199, 132, 0.2);
+            z-index: 100;
+            background: linear-gradient(135deg, rgba(30, 40, 52, 0.7) 0%, rgba(22, 30, 40, 0.8) 100%);
+        }
+
+        .project-card .constellation-dot {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, #4dd0e1, #81c784);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(77, 208, 225, 0.8), 0 0 5px rgba(129, 199, 132, 0.6);
+            animation: pulse 2s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        .project-card:hover .constellation-dot {
+            box-shadow: 0 0 25px rgba(77, 208, 225, 1), 0 0 10px rgba(129, 199, 132, 0.8);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        #constellationCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .project-icon {
+            font-size: 2.8rem;
+            margin-bottom: 18px;
+            display: block;
+            filter: drop-shadow(0 4px 8px rgba(77, 208, 225, 0.3));
+        }
+
+        .project-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 12px;
+            color: #e8eaed;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        .project-card .type {
+            color: #80deea;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(77, 208, 225, 0.12);
+            border-radius: 20px;
+            border: 1px solid rgba(77, 208, 225, 0.25);
+            font-weight: 600;
+        }
+
+        .project-card p {
+            color: #cbd5e0;
+            line-height: 1.7;
+            margin-bottom: 18px;
+            font-size: 0.95rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .tag {
+            background: rgba(129, 199, 132, 0.12);
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(129, 199, 132, 0.25);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            color: #a5d6a7;
+        }
+
+        .project-card:hover .tag {
+            background: rgba(129, 199, 132, 0.2);
+            border-color: rgba(129, 199, 132, 0.4);
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .skill-card {
+            background: rgba(30, 30, 60, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(106, 156, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover {
+            border-color: rgba(106, 156, 255, 0.5);
+            transform: translateY(-5px);
+        }
+
+        .skill-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .skill-bar {
+            background: rgba(255, 255, 255, 0.1);
+            height: 12px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4dd0e1, #81c784, #ffb74d);
+            border-radius: 10px;
+            transition: width 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 0 20px rgba(77, 208, 225, 0.5);
+        }
+
+        .skill-percentage {
+            text-align: right;
+            margin-top: 8px;
+            color: #80deea;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* About Section */
+        .about-section {
+            min-height: 100vh;
+            padding: 100px 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .about-content {
+            max-width: 900px;
+            text-align: center;
+        }
+
+        .about-content h2 {
+            font-size: 3rem;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #64b5f6 0%, #4dd0e1 50%, #81c784 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-content p {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: #cbd5e0;
+            margin-bottom: 30px;
+        }
+
+        .about-highlight {
+            background: rgba(77, 208, 225, 0.1);
+            border-left: 4px solid #4dd0e1;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 40px;
+            font-style: italic;
+            color: #80deea;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: float 2s ease-in-out infinite;
+        }
+
+        .scroll-indicator::before {
+            content: '↓';
+            font-size: 2rem;
+            color: rgba(77, 208, 225, 0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .project-card {
+                max-width: 320px;
+                padding: 30px;
+            }
+
+            .project-icon {
+                font-size: 2.5rem;
+            }
+
+            .project-card h3 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.3rem;
+            }
+
+            .section {
+                padding: 60px 30px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .projects-grid {
+                height: auto;
+                min-height: 200vh;
+            }
+
+            .project-card {
+                position: relative !important;
+                max-width: 100% !important;
+                margin-bottom: 40px;
+                top: auto !important;
+                left: auto !important;
+                right: auto !important;
+                bottom: auto !important;
+            }
+
+            #constellationCanvas {
+                display: none;
+            }
+
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+    <div class="content">
+        <!-- Hero Section -->
+        <section class="hero" id="section-0">
+            <h1>Michael Xi</h1>
+            <div class="subtitle">HCI Enthusiast & Game Developer</div>
+            <p class="tagline">
+                I explore the intersection of interaction design, cognitive experience, and playful systems. 
+                My work focuses on shaping technology that responds to human needs, emotions, and imagination.
+            </p>
+            <div class="scroll-indicator"></div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="section" id="section-1">
+            <h2 class="section-title">Featured Work</h2>
+            <div class="projects-grid">
+                <canvas id="constellationCanvas"></canvas>
+                
+                <div class="project-card" style="top: 5%; left: 8%;" data-index="0" onclick="window.open('https://drive.google.com/file/d/1d3-gJ_PH2w2TixQmvRjDdnoFFMhvK0Y_/view?usp=sharing', '_blank')">
+                    <div class="constellation-dot"></div>
+                    <span class="type">HCI</span>
+                    <h3>Community Watch</h3>
+                    <p>A mobile app designed to help neighborhoods share real-time information about local sightings and safety concerns. Built with a human-centered approach, the app lets users create communities, drop map-based reports, and stay connected through intuitive, lightweight interactions.</p>
+                    <div class="project-tags">
+                        <span class="tag">Mobile Design</span>
+                        <span class="tag">UX Research</span>
+                        <span class="tag">Community Tech</span>
+                    </div>
+                </div>
+
+                <div class="project-card" style="top: 8%; right: 10%;" data-index="1" onclick="window.open('https://xismichael.github.io/ChineseLantern3dModel/', '_blank')">
+                    <div class="constellation-dot"></div>
+                    <span class="type">3D Modeling</span>
+                    <h3>Chinese Lantern</h3>
+                    <p>A fully modeled and rendered 3D Chinese lantern created using procedural techniques and custom shaders. I built the asset from scratch, designing its geometry, crafting detailed materials, and implementing shader-based lighting effects to achieve a warm, atmospheric glow.</p>
+                    <div class="project-tags">
+                        <span class="tag">3D Modeling</span>
+                        <span class="tag">Shaders</span>
+                        <span class="tag">Procedural Design</span>
+                    </div>
+                </div>
+
+                <div class="project-card" style="top: 38%; left: calc(50% - 180px);" data-index="2" onclick="window.open('https://play.unity.com/en/games/e799abed-e85b-4292-9428-fe05e054f096/space10', '_blank')">
+                    <div class="constellation-dot"></div>
+                    <span class="type">Game Design</span>
+                    <h3>S.P.A.C.E</h3>
+                    <p>S.P.A.C.E demonstrates my ability to lead engineering on a simulation-heavy game while building systems that are both scalable and scientifically grounded. I designed a robust architecture, developed a transparent compatibility model rooted in real planetary science, and iterated closely with players and developers to refine clarity, balance, and engagement.</p>
+                    <div class="project-tags">
+                        <span class="tag">Unity</span>
+                        <span class="tag">Systems Design</span>
+                        <span class="tag">Simulation</span>
+                    </div>
+                </div>
+
+                <div class="project-card" style="bottom: 15%; left: 12%;" data-index="3" onclick="window.open('https://xismichael.github.io/typingTutorTurbo/', '_blank')">
+                    <div class="constellation-dot"></div>
+                    <span class="type">Game Design</span>
+                    <h3>Typing Tutor Turbo</h3>
+                    <p>An interactive typing game designed to help players strengthen their English skills through fast-paced, game-based learning. I built a dynamic word system, state-driven letter interactions, and intuitive visual feedback that encourages accuracy, pattern recognition, and vocabulary familiarity.</p>
+                    <div class="project-tags">
+                        <span class="tag">Game Mechanics</span>
+                        <span class="tag">Educational Design</span>
+                        <span class="tag">Interactive Systems</span>
+                    </div>
+                </div>
+
+                <div class="project-card" style="bottom: 12%; right: 10%;" data-index="4" onclick="window.open('PACSSR-301008-G4-终稿.docx.pdf', '_blank')">
+                    <div class="constellation-dot"></div>
+                    <span class="type">Research</span>
+                    <h3>Why Unanchored Game Economies Are Structurally Bound to Fail</h3>
+                    <p>A research paper examining why virtual economies without anchored value systems collapse under pressure. I explore how currency drift, resource inflation, and systemic instability emerge when in-game markets lack grounding mechanisms—connecting economic theory to real game design challenges.</p>
+                    <div class="project-tags">
+                        <span class="tag">Game Economics</span>
+                        <span class="tag">Systems Analysis</span>
+                        <span class="tag">Published Research</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about-section" id="section-2">
+            <div class="about-content">
+                <h2>About Me</h2>
+                <p>
+                    I'm passionate about creating meaningful interactive experiences that blend technology 
+                    with human-centered design. My work explores the intersection of creativity, innovation, 
+                    and user experience, always striving to make digital spaces more intuitive and delightful.
+                </p>
+                <p>
+                    With a deep interest in both game design and HCI, I believe that the best interfaces 
+                    disappear into the experience, allowing users to focus on what truly matters. Whether 
+                    it's crafting immersive game worlds or designing accessible applications, I approach 
+                    every project with empathy and attention to detail.
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Mouse position
+        let mouseX = canvas.width / 2;
+        let mouseY = canvas.height / 2;
+
+        // Particle system
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+
+            update() {
+                // Move towards mouse slightly
+                const dx = mouseX - this.x;
+                const dy = mouseY - this.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < 200) {
+                    const force = (200 - distance) / 200;
+                    this.x += (dx / distance) * force * 2;
+                    this.y += (dy / distance) * force * 2;
+                } else {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                }
+
+                // Wrap around edges
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+            }
+
+            draw() {
+                // Vary particle colors for nuance
+                const colors = [
+                    `rgba(77, 208, 225, ${this.opacity})`,
+                    `rgba(129, 199, 132, ${this.opacity})`,
+                    `rgba(100, 181, 246, ${this.opacity})`,
+                    `rgba(255, 209, 128, ${this.opacity})`
+                ];
+                const colorIndex = Math.floor(this.x * 4 / canvas.width) % 4;
+                ctx.fillStyle = colors[colorIndex];
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Create particles
+        const particles = [];
+        for (let i = 0; i < 150; i++) {
+            particles.push(new Particle());
+        }
+
+        // Track mouse
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        // Constellation canvas for project connections
+        const constellationCanvas = document.getElementById('constellationCanvas');
+        const constellationCtx = constellationCanvas ? constellationCanvas.getContext('2d') : null;
+
+        function resizeConstellationCanvas() {
+            if (constellationCanvas) {
+                const projectsGrid = document.querySelector('.projects-grid');
+                if (projectsGrid) {
+                    constellationCanvas.width = projectsGrid.offsetWidth;
+                    constellationCanvas.height = projectsGrid.offsetHeight;
+                }
+            }
+        }
+
+        window.addEventListener('resize', resizeConstellationCanvas);
+        setTimeout(resizeConstellationCanvas, 100);
+
+        // Get project card positions
+        function getProjectPositions() {
+            const projectCards = document.querySelectorAll('.project-card');
+            const projectsGrid = document.querySelector('.projects-grid');
+            
+            if (!projectsGrid) return [];
+            
+            const gridRect = projectsGrid.getBoundingClientRect();
+            
+            return Array.from(projectCards).map(card => {
+                const rect = card.getBoundingClientRect();
+                return {
+                    x: rect.left - gridRect.left + rect.width / 2,
+                    y: rect.top - gridRect.top + rect.height / 2,
+                    element: card
+                };
+            });
+        }
+
+        // Draw constellation lines between projects
+        function drawConstellationLines() {
+            if (!constellationCtx || !constellationCanvas) return;
+            
+            constellationCtx.clearRect(0, 0, constellationCanvas.width, constellationCanvas.height);
+            
+            const positions = getProjectPositions();
+            
+            // Define connections (constellation pattern)
+            const connections = [
+                [0, 1], // Top row
+                [0, 2], // Top left to center
+                [1, 2], // Top right to center
+                [2, 3], // Center to bottom left
+                [2, 4], // Center to bottom right
+                [3, 4], // Bottom row
+            ];
+            
+            connections.forEach(([i, j]) => {
+                if (positions[i] && positions[j]) {
+                    const start = positions[i];
+                    const end = positions[j];
+                    
+                    // Check if either card is hovered
+                    const isHighlighted = start.element.matches(':hover') || end.element.matches(':hover');
+                    
+                    const gradient = constellationCtx.createLinearGradient(
+                        start.x, start.y, end.x, end.y
+                    );
+                    
+                    if (isHighlighted) {
+                        gradient.addColorStop(0, 'rgba(77, 208, 225, 0.8)');
+                        gradient.addColorStop(0.5, 'rgba(129, 199, 132, 0.7)');
+                        gradient.addColorStop(1, 'rgba(255, 138, 128, 0.6)');
+                        constellationCtx.lineWidth = 2.5;
+                    } else {
+                        gradient.addColorStop(0, 'rgba(77, 208, 225, 0.25)');
+                        gradient.addColorStop(0.5, 'rgba(129, 199, 132, 0.2)');
+                        gradient.addColorStop(1, 'rgba(100, 181, 246, 0.25)');
+                        constellationCtx.lineWidth = 1.5;
+                    }
+                    
+                    constellationCtx.strokeStyle = gradient;
+                    constellationCtx.beginPath();
+                    constellationCtx.moveTo(start.x, start.y);
+                    constellationCtx.lineTo(end.x, end.y);
+                    constellationCtx.stroke();
+                    
+                    // Draw connection dots
+                    if (!isHighlighted) {
+                        [start, end].forEach(pos => {
+                            constellationCtx.fillStyle = 'rgba(77, 208, 225, 0.4)';
+                            constellationCtx.beginPath();
+                            constellationCtx.arc(pos.x, pos.y, 4, 0, Math.PI * 2);
+                            constellationCtx.fill();
+                        });
+                    }
+                }
+            });
+        }
+
+        // Update constellation lines on hover
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', drawConstellationLines);
+            card.addEventListener('mouseleave', drawConstellationLines);
+        });
+
+        // Animation loop
+        function animate() {
+            // Clear with gradient background
+            const bgGradient = ctx.createRadialGradient(
+                canvas.width / 2, canvas.height / 2, 0,
+                canvas.width / 2, canvas.height / 2, canvas.width / 2
+            );
+            bgGradient.addColorStop(0, '#0f1419');
+            bgGradient.addColorStop(0.5, '#1a1f26');
+            bgGradient.addColorStop(1, '#0d1117');
+            ctx.fillStyle = bgGradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw and update particles
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            // Draw particle connections
+            particles.forEach((p1, i) => {
+                particles.slice(i + 1).forEach(p2 => {
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 120) {
+                        const opacity = (1 - distance / 120) * 0.2;
+                        // Vary connection line colors
+                        const gradient = ctx.createLinearGradient(p1.x, p1.y, p2.x, p2.y);
+                        gradient.addColorStop(0, `rgba(77, 208, 225, ${opacity})`);
+                        gradient.addColorStop(1, `rgba(129, 199, 132, ${opacity})`);
+                        ctx.strokeStyle = gradient;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                });
+            });
+
+            // Redraw constellation lines
+            drawConstellationLines();
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Initial draw of constellation
+        setTimeout(() => {
+            drawConstellationLines();
+        }, 500);
+    </script>
+</body>
+</html>
