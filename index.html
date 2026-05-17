@@ -96,7 +96,7 @@
         .projects-grid {
             position: relative;
             width: 100%;
-            height: 120vh;
+            height: 200vh;
             max-width: 1600px;
         }
 
@@ -545,7 +545,7 @@
             <div class="projects-grid">
                 <canvas id="constellationCanvas"></canvas>
                 
-                <div class="project-card" style="top: 2%; left: 22%;" data-index="0" onclick="window.open('https://drive.google.com/file/d/1d3-gJ_PH2w2TixQmvRjDdnoFFMhvK0Y_/view?usp=sharing', '_blank')">
+                <div class="project-card" style="top: 2%; left: 12%;" data-index="0" onclick="window.open('https://drive.google.com/file/d/1d3-gJ_PH2w2TixQmvRjDdnoFFMhvK0Y_/view?usp=sharing', '_blank')">
                     <div class="constellation-dot"></div>
                     <span class="type">HCI</span>
                     <h3>Community Watch</h3>
@@ -557,7 +557,7 @@
                     </div>
                 </div>
 
-                <div class="project-card" style="top: 2%; right: 22%;" data-index="1" onclick="window.open('https://xismichael.github.io/ChineseLantern3dModel/', '_blank')">
+                <div class="project-card" style="top: 2%; right: 12%;" data-index="1" onclick="window.open('https://xismichael.github.io/ChineseLantern3dModel/', '_blank')">
                     <div class="constellation-dot"></div>
                     <span class="type">3D Modeling</span>
                     <h3>Chinese Lantern</h3>
@@ -569,7 +569,7 @@
                     </div>
                 </div>
 
-                <div class="project-card" style="top: 50%; left: 2%; margin-top: -120px;" data-index="2" onclick="window.open('https://xismichael.github.io/typingTutorTurbo/', '_blank')">
+                <div class="project-card" style="top: 42%; left: 0%;" data-index="2" onclick="window.open('https://xismichael.github.io/typingTutorTurbo/', '_blank')">
                     <div class="constellation-dot"></div>
                     <span class="type">Game Design</span>
                     <h3>Typing Tutor Turbo</h3>
@@ -581,7 +581,7 @@
                     </div>
                 </div>
 
-                <div class="project-card" style="top: 50%; right: 2%; margin-top: -120px;" data-index="3" onclick="window.open('https://play.unity.com/en/games/e799abed-e85b-4292-9428-fe05e054f096/space10', '_blank')">
+                <div class="project-card" style="top: 42%; right: 0%;" data-index="3" onclick="window.open('https://play.unity.com/en/games/e799abed-e85b-4292-9428-fe05e054f096/space10', '_blank')">
                     <div class="constellation-dot"></div>
                     <span class="type">Game Design</span>
                     <h3>S.P.A.C.E</h3>
@@ -593,7 +593,7 @@
                     </div>
                 </div>
 
-                <div class="project-card" style="bottom: 2%; left: 24%;" data-index="4" onclick="window.open('https://mochoa.itch.io/till-tomorrow', '_blank')">
+                <div class="project-card" style="bottom: 2%; left: 12%;" data-index="4" onclick="window.open('https://mochoa.itch.io/till-tomorrow', '_blank')">
                     <div class="constellation-dot"></div>
                     <span class="type">Game Design</span>
                     <h3>Till Tomorrow</h3>
@@ -605,7 +605,7 @@
                     </div>
                 </div>
 
-                <div class="project-card" style="bottom: 2%; right: 24%;" data-index="5" onclick="window.open('PACSSR-301008-G4-终稿.docx.pdf', '_blank')">
+                <div class="project-card" style="bottom: 2%; right: 12%;" data-index="5" onclick="window.open('PACSSR-301008-G4-终稿.docx.pdf', '_blank')">
                     <div class="constellation-dot"></div>
                     <span class="type">Research</span>
                     <h3>Why Unanchored Game Economies Are Structurally Bound to Fail</h3>
@@ -614,6 +614,18 @@
                         <span class="tag">Game Economics</span>
                         <span class="tag">Systems Analysis</span>
                         <span class="tag">Published Research</span>
+                    </div>
+                </div>
+
+                <div class="project-card" style="top: 42%; left: 50%; margin-left: -180px;" data-index="6" onclick="window.open('https://drive.google.com/drive/folders/1QTmLoUXXF59-ulBvZFqloesWy_MtIORV?usp=sharing', '_blank')">
+                    <div class="constellation-dot"></div>
+                    <span class="type">Game Design</span>
+                    <h3>Bubble Mage</h3>
+                    <p>Bubble Mage is a third-person action-exploration game built in Unity, set in an open world where the player wields a wand that conjures magical bubbles as the core means of interacting with the world. Players explore procedurally placed terrain under fog-of-war, take on quests and puzzles, and use bubble magic to capture creatures, manipulate objects, and shape encounters on their own terms. The game pairs an original, expressive magic system with a hand-crafted sense of place, emphasizing curiosity, experimentation, and player agency over rigid combat loops.</p>
+                    <div class="project-tags">
+                        <span class="tag">Unity</span>
+                        <span class="tag">Open World</span>
+                        <span class="tag">Action-Exploration</span>
                     </div>
                 </div>
 
@@ -793,17 +805,20 @@
             
             const positions = getProjectPositions();
             
-            // Define connections (constellation pattern - hexagon/star shape)
+            // Define connections (constellation pattern - 2-3-2 layout with Bubble Mage as center hub)
             const connections = [
-                [0, 1], // Top left to top right
-                [0, 2], // Top left to middle left
-                [1, 3], // Top right to middle right
-                [2, 4], // Middle left to bottom left
-                [3, 5], // Middle right to bottom right
-                [4, 5], // Bottom left to bottom right
-                [2, 3], // Middle left to middle right (cross connection)
-                [0, 4], // Top left to bottom left (long diagonal)
-                [1, 5], // Top right to bottom right (long diagonal)
+                [0, 1], // Top row
+                [4, 5], // Bottom row
+                [2, 6], // Middle row left
+                [6, 3], // Middle row right
+                [0, 2], // Top-left to middle-left
+                [1, 3], // Top-right to middle-right
+                [2, 4], // Middle-left to bottom-left
+                [3, 5], // Middle-right to bottom-right
+                [0, 6], // Top-left to center
+                [1, 6], // Top-right to center
+                [4, 6], // Bottom-left to center
+                [5, 6], // Bottom-right to center
             ];
             
             connections.forEach(([i, j]) => {
